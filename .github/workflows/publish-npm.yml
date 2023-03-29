@@ -1,0 +1,37 @@
+name: NPM package publishing
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish_javy:
+    name: Publish javy NPM package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          registry-url: "https://registry.npmjs.org"
+
+      - run: npm publish
+        working-directory: npm/javy
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish_javy_cli:
+    name: Publish javy-cli NPM package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          registry-url: "https://registry.npmjs.org"
+
+      - run: npm publish
+        working-directory: npm/javy-cli
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
